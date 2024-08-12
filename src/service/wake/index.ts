@@ -1,6 +1,6 @@
 import { Porcupine } from '@picovoice/porcupine-node';
 import { createEventDefinition, EventBus } from 'ts-bus';
-import { BaseTask } from './bus';
+import { BaseTask } from '../bus';
 
 const taskWakeService =
   createEventDefinition<BaseTask & {}>()('task.wake.service')

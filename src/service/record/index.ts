@@ -1,7 +1,7 @@
 import record from 'node-record-lpcm16'
 import fs from 'fs'
 import { createEventDefinition, EventBus } from 'ts-bus'
-import { BaseTask } from './bus'
+import { BaseTask } from '../bus'
 
 export const taskRecordService =
   createEventDefinition<BaseTask & Record<any, any>>()('task.record.service')

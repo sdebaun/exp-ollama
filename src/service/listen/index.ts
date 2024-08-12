@@ -1,6 +1,6 @@
 import { PvRecorder } from '@picovoice/pvrecorder-node'
 import { createEventDefinition, EventBus } from 'ts-bus';
-import { BaseTask } from './bus';
+import { BaseTask } from '../bus';
 
 const taskListenService =
   createEventDefinition<BaseTask & Record<string, any>>()('task.listen.service')
@@ -16,7 +16,6 @@ export const startListenService = (bus: EventBus) => {
   try {
     const devices: string[] = PvRecorder.getAvailableDevices()
     const primaryMic = devices.findIndex(s => s === 'MacBook Pro Microphone')
-    console.log(devices, primaryMic)
     bus.publish(taskListenService({ data: { devices, primaryMic } }))
 
     recorder = new PvRecorder(512)
@@ -25,7 +24,6 @@ export const startListenService = (bus: EventBus) => {
     process.exit()
   }
 
-  // recorder.read() sends to porcupine
   async function pvRecorderListening() {
     bus.publish(taskListenService({ msg: 'starting listening...' }))
     try {

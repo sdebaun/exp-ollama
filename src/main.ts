@@ -1,8 +1,8 @@
-import { startBusService } from './bus'
-import { startListenService, taskListenHear } from './listen'
-import { startWakeService, taskWakeCheck, taskWakeWoke } from './wake'
-import { startRecordService, taskRecordDone, taskRecordStart } from './record'
-import { startTranscribeService, taskTranscribeStart } from './transcribe'
+import { startBusService } from './service/bus'
+import { startListenService, taskListenHear } from './service/listen'
+import { startWakeService, taskWakeCheck, taskWakeWoke } from './service/wake'
+import { startRecordService, taskRecordDone, taskRecordStart } from './service/record'
+import { startTranscribeService, taskTranscribeStart } from './service/transcribe'
 
 const { bus } = startBusService()
 startListenService(bus)
@@ -21,3 +21,8 @@ startTranscribeService(bus)
 bus.subscribe(taskRecordDone, ({ payload: { filepath } }) => {
   bus.publish(taskTranscribeStart({ filepath }))
 })
+
+// now instruct service
+
+// now webapi?
+// now webapp?

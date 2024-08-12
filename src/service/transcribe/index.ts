@@ -1,4 +1,4 @@
-import { BaseTask, createEventDefinition, EventBus } from "./bus"
+import { BaseTask, createEventDefinition, EventBus } from "../bus"
 
 const taskTranscribeService =
   createEventDefinition<BaseTask & {}>()('task.transcribe.service')
@@ -57,7 +57,6 @@ export const startTranscribeService = async (bus: EventBus) => {
     if (error) {
       bus.publish(taskTranscribeService({ err: error }))
     } else if (!error && result) {
-      // result.results.
       const transcript = result.results.channels[0].alternatives[0].transcript
       bus.publish(taskTranscribeDone({ transcript }))
     }
