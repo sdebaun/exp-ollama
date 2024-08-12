@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  ollama-backend:
+    image: ollama/ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ./vols/ollama:/root/ollama
+    environment:
+      - MODEL=dolphin-llama3:8b
+    restart: always
+    container_name: ollama-backend
+
+  ollama-openweb-ui:
+    image: ghcr.io/open-webui/open-webui:main
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./vols/openweb:/root/openweb
+    environment:
+      - OLLAMA_API_BASE_URL=http://ollama-backend:11434/api
+      - DOCS_DIR=/root/openweb/docs_dir
+      - RAG_EMBEDDING_ENGINE=ollama
+    depends_on:
+      - ollama-backend
+    restart: always
+    container_name: ollama-openweb-ui
